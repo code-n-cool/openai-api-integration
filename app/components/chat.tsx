@@ -96,11 +96,13 @@ const Chat = ({
         }),
       }
     );
+    console.log("gpt response", response)
     const stream = AssistantStream.fromReadableStream(response.body);
     handleReadableStream(stream);
   };
 
   const submitActionResult = async (runId, toolCallOutputs) => {
+    console.log("toolCallOutputs", toolCallOutputs)
     const response = await fetch(
       `/api/assistants/threads/${threadId}/actions`,
       {
@@ -172,10 +174,12 @@ const Chat = ({
   ) => {
     const runId = event.data.id;
     const toolCalls = event.data.required_action.submit_tool_outputs.tool_calls;
+    console.log("toolcalls", toolCalls)
     // loop over tool calls and call function handler
     const toolCallOutputs = await Promise.all(
       toolCalls.map(async (toolCall) => {
         const result = await functionCallHandler(toolCall);
+        console.log("result", result);
         return { output: result, tool_call_id: toolCall.id };
       })
     );

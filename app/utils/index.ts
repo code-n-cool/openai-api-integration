@@ -12,4 +12,14 @@ const getWeather = (location) => {
   };
 };
 
-export { getWeather };
+const getAvailabilty = async (date) => {
+  const res = await fetch(`https://66b357b77fba54a5b7ec89d3.mockapi.io/api/v1/availabilities`, {
+    method: "GET",
+    redirect: "follow"
+  })
+
+  const data = await res.json();
+  return data;
+}
+
+export { getWeather, getAvailabilty };
