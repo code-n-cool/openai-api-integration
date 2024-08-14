@@ -35,7 +35,7 @@ const FunctionCalling = () => {
   return (
     <main className="max-h-screen h-screen">
       <div className="h-[100%] flex flex-col items-stretch">
-        <div className="max-h-[40%] flex-shrink h-fit">
+        <div className="max-h-[40%] flex-shrink h-fit" data-testid="datatable">
           <DataTable data={availableData} />
         </div>
         <div className="flex-grow flex-shrink overflow-auto">
