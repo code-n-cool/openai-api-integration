@@ -5,7 +5,7 @@ export const runtime = "nodejs";
 // Create a new assistant
 export async function POST() {
   const assistant = await openai.beta.assistants.create({
-    instructions: "You are a helpful assistant.",
+    instructions: "An assitent for checking the availability of golf courses",
     name: "Quickstart Assistant",
     model: "gpt-4o",
     tools: [
@@ -13,25 +13,23 @@ export async function POST() {
       {
         type: "function",
         function: {
-          name: "get_weather",
-          description: "Determine weather in my location",
-          parameters: {
-            type: "object",
-            properties: {
-              location: {
-                type: "string",
-                description: "The city and state e.g. San Francisco, CA",
-              },
-              unit: {
-                type: "string",
-                enum: ["c", "f"],
-              },
+          "name": "search_availability",
+          "description": "Search availability",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "date": {
+                "type": "string",
+                "description": "The date in ISO 8601 format e.g. 2024-08-12T14:43:57.634Z"
+              }
             },
-            required: ["location"],
-          },
+            "required": [
+              "date"
+            ],
+            "additionalProperties": false
+          }
         },
       },
-      { type: "file_search" },
     ],
   });
   return Response.json({ assistantId: assistant.id });

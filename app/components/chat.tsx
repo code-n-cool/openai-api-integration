@@ -96,13 +96,11 @@ const Chat = ({
         }),
       }
     );
-    console.log("gpt response", response)
     const stream = AssistantStream.fromReadableStream(response.body);
     handleReadableStream(stream);
   };
 
   const submitActionResult = async (runId, toolCallOutputs) => {
-    console.log("toolCallOutputs", toolCallOutputs)
     const response = await fetch(
       `/api/assistants/threads/${threadId}/actions`,
       {
@@ -174,12 +172,10 @@ const Chat = ({
   ) => {
     const runId = event.data.id;
     const toolCalls = event.data.required_action.submit_tool_outputs.tool_calls;
-    console.log("toolcalls", toolCalls)
     // loop over tool calls and call function handler
     const toolCallOutputs = await Promise.all(
       toolCalls.map(async (toolCall) => {
         const result = await functionCallHandler(toolCall);
-        console.log("result", result);
         return { output: result, tool_call_id: toolCall.id };
       })
     );
@@ -254,7 +250,7 @@ const Chat = ({
 
   return (
     <div className={styles.chatContainer}>
-      <div className={styles.messages}>
+      <div className={`${styles.messages} pb-[110px]`}>
         {messages.map((msg, index) => (
           <Message key={index} role={msg.role} text={msg.text} />
         ))}
@@ -262,7 +258,7 @@ const Chat = ({
       </div>
       <form
         onSubmit={handleSubmit}
-        className={`${styles.inputForm} ${styles.clearfix}`}
+        className={`${styles.inputForm} ${styles.clearfix} absolute before:w-[100%] before:h-[100%] before:absolute before:mr-[20px] before:backdrop-blur-[5px] before:rounded-t-[50px] before:z-[-1] z-[1]`}
       >
         <input
           type="text"
