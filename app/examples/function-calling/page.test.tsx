@@ -1,6 +1,6 @@
 import React from 'react';  
 import { render, screen } from '@testing-library/react';  
-import FunctionCalling from './page'; // Adjust the path as necessary  
+import FunctionCalling from './page';
 import { getAvailabilty } from '../../utils';
 
 // Mocking the getAvailabilty function  
@@ -25,9 +25,6 @@ describe('FunctionCalling Component', () => {
         (getAvailabilty as jest.Mock).mockResolvedValue(mockData); // Mock implementation to resolve  
 
         render(<FunctionCalling />);  
-
-        // Simulate a scenario to trigger functionCallHandler (you may need to implement this based on your test requirements)  
-        // For example, triggering a button click if you have any buttons in your chat component  
 
         expect(await screen.findByText('Sample Data')).toBeInTheDocument(); // Assuming your DataTable displays 'name'  
     });  
